@@ -33,7 +33,7 @@ namespace std {
         consteval vector& operator=(vector&& other) noexcept {
             if (this != &other) {
                 clear();
-                if (_data) ::operator delete(_data);
+                if (_data) __builtin_operator_delete(_data);
                 _data = other._data; _size = other._size; _capacity = other._capacity;
                 other._data = nullptr; other._size = 0; other._capacity = 0;
             }
