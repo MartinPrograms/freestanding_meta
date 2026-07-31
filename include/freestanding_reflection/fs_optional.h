@@ -76,7 +76,7 @@ namespace std {
         template<typename... Args>
         consteval T& emplace(Args&&... args) {
             reset();
-            ::new (_storage()) T(std::forward<Args>(args)...);
+            :: new (_storage()) T(std::forward<Args>(args)...);
             _engaged = true;
             return *_storage();
         }
@@ -94,10 +94,14 @@ namespace std {
         }
 
     private:
-        alignas(T) unsigned char _bytes[sizeof(T)];
+        union {
+            char _dummy;
+            T _value;
+        };
+
         bool _engaged = false;
-        consteval T* _storage() { return reinterpret_cast<T*>(_bytes); }
-        consteval const T* _storage() const { return reinterpret_cast<const T*>(_bytes); }
+        consteval T* _storage() { return &_value; }
+        consteval const T* _storage() const { return &_value; }
     };
 }
 
