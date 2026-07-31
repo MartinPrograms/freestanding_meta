@@ -4,8 +4,9 @@
 #include <cstddef>
 #include <new>
 #include <utility>
+#include <version>
 
-#if __STDC_HOSTED__
+#ifdef __cpp_lib_filesystem
 #include <string>
 #else
 

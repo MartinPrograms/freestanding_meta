@@ -5,8 +5,9 @@
 #include <new>
 #include <utility>
 #include <type_traits>
+#include <version>
 
-#if __STDC_HOSTED__
+#ifdef __cpp_lib_filesystem
 #include <optional>
 #else
 

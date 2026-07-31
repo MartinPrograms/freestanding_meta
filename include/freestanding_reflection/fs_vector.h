@@ -5,9 +5,11 @@
 #include <new>
 #include <initializer_list>
 #include <utility>
+#include <version>
 
 // The vector *has* to be in the std:: namespace, overwriting it does not really work, so this check just makes sure theres only one std::vector at a time
-#if __STDC_HOSTED__
+
+#ifdef __cpp_lib_filesystem
 #include <vector>
 #else
 

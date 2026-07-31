@@ -2,8 +2,9 @@
 #define FREESTANDING_METASTRING_VIEW_H
 
 #include <cstddef>
+#include <version>
 
-#if __STDC_HOSTED__
+#ifdef __cpp_lib_filesystem
 #include <string_view>
 #else
 
