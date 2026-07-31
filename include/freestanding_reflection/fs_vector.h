@@ -33,7 +33,7 @@ namespace std {
         consteval vector& operator=(vector&& other) noexcept {
             if (this != &other) {
                 clear();
-                if (_data) __builtin_operator_delete(_data);
+                if (_data) ::operator delete(_data);
                 _data = other._data; _size = other._size; _capacity = other._capacity;
                 other._data = nullptr; other._size = 0; other._capacity = 0;
             }
@@ -79,6 +79,16 @@ namespace std {
             for (std::size_t i = 0; i < _size; i++)
                 _data[i].~T();
             _size = 0;
+        }
+
+        consteval void erase(std::size_t index) {
+            if (index >= _size) return;
+            _data[index].~T();
+            for (std::size_t i = index; i < _size - 1; i++) {
+                ::new (_data + i) T(std::move(_data[i + 1]));
+                _data[i + 1].~T();
+            }
+            --_size;
         }
 
         consteval std::size_t size() const noexcept { return _size; }
