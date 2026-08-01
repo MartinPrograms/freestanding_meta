@@ -27,6 +27,7 @@ namespace std {
         }
 
         template<typename Range>
+        requires (same_as<T, ranges::range_value_t<Range>>)
         consteval basic_string(const Range& range) {
             for (auto&& c : range)
                 push_back(c);
